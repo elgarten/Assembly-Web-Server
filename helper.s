@@ -230,67 +230,7 @@ getParams:
   pop eax
   add esp, 4
   ret
-;This doesn't work yet, don't use it
-atoi:
-  push ebx
-  push ecx
-  push edx
-  .initLoop:
-    mov bl, byte [eax]
-    cmp bl, byte 0
-    je .exitInitLoop
-    cmp bl, byte '0'
-    jl .initLoop
-    cmp bl, byte '9'
-    jg .initLoop
-  .exitInitLoop:
 
-  cmp bl, byte 0
-  jne .notZeroAfterInitLoop
-  mov eax, 0
-  jmp .exit
-  .notZeroAfterInitLoop:
-  mov ecx,eax
-  xor eax, eax
-  xor ebx, ebx
-  mov bl, [ecx]
-  .mainLoop:
-    cmp bl, byte '0'
-    jl .mainLoopComparator
-    cmp bl, byte '9'
-    jg .mainLoopComparator
-    sub bl, byte '0'
-    mov edx, 10
-    mul edx
-    add eax, ebx
-    .mainLoopComparator:
-    inc ecx
-    mov bl, byte [ecx]
-    cmp bl, byte 0
-    jne .mainLoop
-  .exit:
-  pop edx
-  pop ecx
-  pop ebx
-  ret
-
-; Psedo-Code  - its acctually just c-ish
-; (u)int32_t atoi(char *str){ //The u is just for now
-;   for(;*str != 0 && !('0' <= *str && *str <= '9'); str++); // get to start of nums
-;
-;   if(*str == 0) return 0;
-;
-;   uint32_t ret;
-;
-;   do{
-;     if('0' <= *str && *str <= '9'){
-;       ret *= 10;
-;       ret += *str - '0'
-;     }
-;   }for(; *str; str++);
-;
-;   return ret;
-; }
 uintToStr: ;uint32_t uintToStr(uint32_t n); //Return Value <=10
   push ebx
   push ecx
@@ -335,32 +275,6 @@ uintToStr: ;uint32_t uintToStr(uint32_t n); //Return Value <=10
     inc edx
     jmp .weLoopingBois
 
-  ; xor edx, edx
-  ; dec edx
-  ; mov eax, ecx
-  ; shr eax, 1
-  ; .forLoopComparator:
-  ; inc edx
-  ; cmp edx, eax
-  ; jge .exit
-  ;   mov cl, byte [ebx + edx]
-  ;   push eax
-  ;   push ecx
-  ;   push edx
-  ;   ;eax = len >> 1
-  ;   ;ecx = len
-  ;   ;edx = offset
-  ;   sub ecx, edx
-  ;   add ecx, ebx
-  ;   mov al, byte [ecx]
-  ;   add edx, ebx
-  ;   mov ah, byte [edx]
-  ;   mov [ecx], ah
-  ;   mov [edx], al
-  ;   pop edx
-  ;   pop ecx
-  ;   pop eax
-  ; jmp .forLoopComparator
   .exit:
   mov eax,ecx
   pop edx
